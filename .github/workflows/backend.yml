@@ -29,4 +29,4 @@ jobs:
       - name: Run Backend
         run: |
           cd Backend
-          nohup node index.js > backend.log 2>&1 &
+          nohup /home/ubuntu/.nvm/versions/node/v18.19.0/bin/node index.js > backend.log 2>&1 &
