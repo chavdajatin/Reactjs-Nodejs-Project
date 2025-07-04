@@ -1,0 +1,41 @@
+name: Deploy Frontend to EC2
+
+on:
+  push:
+    paths:
+      - 'Frontend/**'
+    branches:
+      - main
+
+jobs:
+  frontend-deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Node.js and Nginx
+        run: |
+          sudo apt update
+          sudo apt install -y curl nginx
+
+          # Install Node.js using nvm
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+          source ~/.bashrc
+          nvm install 18
+
+          # Ensure nginx is running
+          sudo systemctl enable nginx
+          sudo systemctl start nginx
+
+      - name: Build and Deploy React App
+        run: |
+          cd Frontend
+          npm install
+          npm run build
+          sudo rm -rf /var/www/html/*
+          sudo cp -r build/* /var/www/html/
+          sudo systemctl restart nginx
