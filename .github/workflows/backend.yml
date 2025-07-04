@@ -29,4 +29,4 @@ jobs:
       - name: Run Backend
         run: |
           cd Backend
-          nohup /usr/bin/node index.js > backend.log 2>&1 &
+          nohup node index.js > backend.log 2>&1 &
