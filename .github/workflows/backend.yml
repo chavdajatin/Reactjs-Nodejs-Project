@@ -21,12 +21,24 @@ jobs:
         with:
           node-version: 18
 
+      - name: Install PM2 globally
+        run: |
+          npm install -g pm2
+
       - name: Install Dependencies
         run: |
           cd Backend
           npm install
 
-      - name: Run Backend
+      # Optional: If you have a build step (like TypeScript)
+      # - name: Build Project
+      #   run: |
+      #     cd Backend
+      #     npm run build
+
+      - name: Restart Backend with PM2
         run: |
           cd Backend
-          node index.js
+          pm2 delete backend || true
+          pm2 start index.js --name backend
+          pm2 save
