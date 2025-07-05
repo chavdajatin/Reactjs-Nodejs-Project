@@ -6,7 +6,7 @@ const PORT = 5000;
 
 app.use(cors());
 
-app.get("/", (req, res) => res.send("Hello Devops Engineers from backend!"));
+app.get("/", (req, res) => res.send("Hello from backend!"));
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ Server running on http://0.0.0.0:${PORT}`);
