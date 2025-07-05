@@ -26,9 +26,10 @@ jobs:
           cd Backend
           npm install
 
-      - name: Restart Backend with PM2
+      - name: Restart Backend with PM2 (Correct Directory)
         run: |
-          cd Backend
+          cd ~/actions-runner/_work/Reactjs-Nodejs-Project/Reactjs-Nodejs-Project/Backend
+          echo "Working Directory: $(pwd)"
           pm2 delete backend || true
-          pm2 start index.js --name backend --cwd $(pwd)
+          pm2 start index.js --name backend
           pm2 save
